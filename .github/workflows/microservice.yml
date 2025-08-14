@@ -25,17 +25,20 @@ jobs:
                 java-version: '17'
             - name: Build with Gradle
               run: ./gradlew build
-            - name: Create container
-              run: docker build -t ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest .
 
-            - name: Docker login
-              env:
-                CR_PAT: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                echo $CR_PAT | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            - name: Push container
-              if: ${{ github.ref_name == 'main' }}
-              run: docker push ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
 
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v3
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Build and push
+              uses: docker/build-push-action@v6
+              with:
+                push: ${{ github.ref_name == 'main' }}
+                tags: ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest
 
 
