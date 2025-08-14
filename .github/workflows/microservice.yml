@@ -35,10 +35,17 @@ jobs:
                 registry: ghcr.io
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
+            
+            - name: Set should deploy
+              id: should_deploy
+              run: |
+                echo "should_deploy=${{ github.ref_name == 'main' }}" >> $GITHUB_OUTPUT
+                echo ":rocket: using branch ** ${{ github.ref_name }} ** should deploy: ${{ github.ref_name == 'main' }}" >> $GITHUB_STEP_SUMMARY
+
             - name: Build and push
               uses: docker/build-push-action@v6
               with:
-                push: ${{ github.ref_name == 'main' }}
+                push: ${{ steps.should_deploy.outputs.should_deploy == 'true' }}
                 tags: ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest
 
 
