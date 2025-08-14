@@ -26,7 +26,7 @@ jobs:
             - name: Build with Gradle
               run: ./gradlew build
             - name: Create container
-              run: docker build -t ghcr.io/${{ github.repository }}/devops-20251-0.0.1-snapshot:latest .
+              run: docker build -t ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest .
 
             - name: Docker login
               env:
@@ -34,7 +34,7 @@ jobs:
               run: |
                 echo $CR_PAT | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             - name: Push container
-              run: docker push ghcr.io/${{ github.repository }}/devops-20251-0.0.1-snapshot:latest
+              run: docker push ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest
 
 
 
