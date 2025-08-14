@@ -1,0 +1,26 @@
+name: Microservice CI/CD Pipeline
+
+on:
+    push:
+        branches:
+            - main
+            - feature/**
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    microservice:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v5
+            - name: Set up JDK
+              uses: actions/setup-java@v4
+              with:
+                distribution: 'adopt'
+                java-version: '17'
+            - name: Build with Gradle
+              run: ./gradlew build
+            - name: Create container
+              run: docker build -t devops-20251-0.0.1-SNAPSHOT .
