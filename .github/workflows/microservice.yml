@@ -49,5 +49,8 @@ jobs:
                 tags: ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
-
-
+    reusable:
+        name: Reusable
+        uses: ./.github/workflows/reusable.yml
+        with:
+            name: "Orlando"

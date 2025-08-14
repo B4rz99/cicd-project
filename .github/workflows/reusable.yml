@@ -1,0 +1,15 @@
+on:
+    workflow_call:
+        inputs:
+            name:
+                type: string
+                required: true
+
+jobs:
+    reusable:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v5
+            - name: run
+              run: echo "Hello, ${{ inputs.name }}"
