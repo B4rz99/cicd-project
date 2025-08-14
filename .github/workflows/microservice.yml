@@ -47,5 +47,7 @@ jobs:
               with:
                 push: ${{ steps.should_deploy.outputs.should_deploy == 'true' }}
                 tags: ghcr.io/b4rz99/cicd-project/devops-20251-0.0.1-snapshot:latest
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
 
 
